@@ -3,309 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>쌰갈렌즈 - AI 공간 분석 청소 & 인테리어 웹앱</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu&family=Gowun+Dodum&display=swap">
+    <title>쌰갈렌즈 - AI 공간 분석 시스템</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Gaegu:wght@700&display=swap">
     <style>
         :root {
-            --wood-dark: #8B5A2B;
+            --wood-primary: #8B5A2B;
             --wood-light: #D2B48C;
-            --wood-bg: #FDFBF7;
+            --wood-accent: #E6DCD0;
+            --bg-cream: #FAF7F2;
             --white: #FFFFFF;
-            --gray-text: #555555;
+            --text-main: #333333;
+            --text-muted: #777777;
         }
 
+        /* 기본 스타일 및 반응형 기초 설계 */
         body {
-            font-family: 'Gowun Dodum', 'Gaegu', sans-serif;
+            font-family: 'Gowun Dodum', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
-            background-color: var(--wood-bg);
-            color: var(--gray-text);
-            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
+        /* 상단 바 기본 구성 */
         header {
-            background-color: var(--wood-dark);
-            color: var(--white);
+            width: 100%;
+            background-color: var(--white);
+            border-bottom: 2px solid var(--wood-accent);
             text-align: center;
-            padding: 2rem 1rem;
-            box-shadow: 0 4px 10px rgba(139,90,43,0.15);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 8px rgba(139,90,43,0.05);
         }
 
         header h1 {
             font-family: 'Gaegu', sans-serif;
-            font-size: 2.8rem;
+            color: var(--wood-primary);
             margin: 0;
+            font-size: 2.5rem;
         }
 
-        main {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 6px 15px rgba(139,90,43,0.06);
-            margin-bottom: 2rem;
-            border: 2px solid #F1EAE0;
-        }
-
-        h2, h3 {
-            color: var(--wood-dark);
-            font-family: 'Gaegu', sans-serif;
-            border-bottom: 2px dashed var(--wood-light);
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-        }
-        h2 { font-size: 2.2rem; }
-        h3 { font-size: 1.7rem; }
-
-        .guide-box {
-            background-color: #F9F6F0;
-            border-left: 4px solid var(--wood-light);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
+        header p {
+            margin: 0.3rem 0 0 0;
             font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px; /* 모바일 및 웹에서 심플하게 떨어지는 카드 레이아웃 */
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        /* 디자인 참고용 카드 컴포넌트 */
+        .card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(139,90,43,0.08);
+            border: 1px solid var(--wood-accent);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        /* 텍스트 굵기 및 크기 대비 규칙 적용 (Bolder not Bigger) */
+        h2 {
+            font-family: 'Gaegu', sans-serif;
+            font-size: 2rem;
+            color: var(--wood-primary);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
+        /* 폰트 굵기 대비 강조 */
         label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--wood-dark);
+            font-weight: 700; 
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+            color: var(--wood-primary);
         }
 
-        input[type="text"], select {
+        input[type="text"], input[type="password"], select {
             width: 100%;
             padding: 0.8rem;
-            border: 2px solid #E6DCD0;
+            border: 2px solid var(--wood-accent);
             border-radius: 8px;
             box-sizing: border-box;
             font-family: inherit;
+            font-size: 0.95rem;
         }
 
-        input[type="text"]:focus, select:focus {
+        input:focus, select:focus {
             outline: none;
-            border-color: var(--wood-dark);
+            border-color: var(--wood-primary);
         }
 
-        .radio-group {
-            display: flex;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        .file-upload-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .file-upload {
-            border: 2px dashed var(--wood-light);
-            padding: 1.5rem 1rem;
-            text-align: center;
-            background: var(--white);
-            cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.2s;
-        }
-
-        .file-upload:hover {
-            background-color: #FAF6F0;
-            border-color: var(--wood-dark);
-        }
-
-        .file-upload input {
-            display: none;
-        }
-
-        .preview-img {
-            max-width: 100%;
-            max-height: 120px;
-            margin-top: 0.5rem;
-            display: none;
-            border-radius: 6px;
-            object-fit: cover;
-        }
-
+        /* 버튼 컴포넌트 */
         button {
-            background-color: var(--wood-dark);
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--wood-primary);
             color: var(--white);
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            font-family: 'Gaegu', sans-serif;
-            font-weight: bold;
             border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background-color: #6E4420;
-        }
-
-        /* 결과 창 스타일 */
-        .result-box {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .result-section {
-            background: #FDFDFD;
-            padding: 1.5rem;
-            border: 2px solid #F1EAE0;
-            margin-top: 1.5rem;
-            border-radius: 12px;
-        }
-
-        /* 체크리스트 스타일 */
-        .todo-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            padding: 0.5rem;
-            background: #FAF8F5;
-            border-radius: 6px;
-        }
-
-        .todo-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px;
-            cursor: pointer;
-            accent-color: var(--wood-dark);
-        }
-
-        .todo-item input[type="checkbox"]:checked + span {
-            text-decoration: line-through;
-            color: #aaa;
-        }
-
-        /* 상품 카드 스타일 */
-        .item-market {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .product-card {
-            border: 1px solid #E6DCD0;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            background: var(--white);
-        }
-
-        .product-card img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-link {
-            display: inline-block;
-            margin-top: 0.5rem;
-            padding: 0.4rem 0.8rem;
-            background-color: #E7223D; /* 쿠팡 레드 느낌 */
-            color: white;
-            text-decoration: none;
-            font-size: 0.85rem;
-            border-radius: 4px;
-        }
-
-        .hidden { display: none; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>✨ 쌰갈렌즈</h1>
-        <p>AI 딥러닝 공간 분석 & 맞춤형 청소·인테리어 솔루션</p>
-    </header>
-
-    <main>
-        <div class="card" id="loginCard">
-            <h2>🔐 로그인 및 데이터 누적</h2>
-            <div class="form-group">
-                <label for="userId">사용자 아이디</label>
-                <input type="text" id="userId" placeholder="귀여운 아이디를 만들어보세요!">
-            </div>
-            <button onclick="handleLogin()">로그인하고 방 분석하기</button>
-        </div>
-
-        <div class="card hidden" id="mainAppCard">
-            <h2 id="welcomeMessage">👋 반가워요!</h2>
-            
-            <div class="guide-box">
-                <strong>📸 정밀 초정밀 AI 딥러닝을 위한 사진 업로드 안내</strong><br>
-                공간의 가구 배치 구조, 채광 상태, 그리고 구석에 흩어진 물품들을 뻔하지 않게 다각도로 정밀 분석하기 위해 <strong>최소 2장 ~ 최대 3장의 사진</strong>을 나누어 업로드해 주세요!
-            </div>
-
-            <form id="surveyForm">
-                <h3>📋 기본 맞춤 선택</h3>
-                <div class="form-group">
-                    <label for="ageGroup">나이대</label>
-                    <select id="ageGroup">
-                        <option value="10대">10대 (바른 청소 습관 기르기)</option>
-                        <option value="20대">20대 (트렌디 자취방 꾸미기)</option>
-                        <option value="30대 이상">30대 이상 (내 집 마련 성인)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="spaceType">청소/인테리어할 공간 종류</label>
-                    <select id="spaceType">
-                        <option value="원룸 침실">원룸 침실</option>
-                        <option value="학생 공부방">학생 공부방</option>
-                        <option value="거실 공간">거실 공간</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>원하는 서비스 집중 선택</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="serviceType" value="정리정돈" checked> 정리 정돈 (청소 순서)</label>
-                        <label><input type="radio" name="serviceType" value="인테리어"> 인테리어 (딥러닝 물품 재배치)</label>
-                    </div>
-                </div>
-
-                <h3>📸 방 사진 업로드 (정밀 분석을 위해 3장 권장)</h3>
-                <div class="file-upload-wrapper">
-                    <div class="file-upload" onclick="document.getElementById('imgInp1').click()">
-                        <span>🖼️ 1번 사진<br>(전체 구조/채광용)</span>
-                        <input type="file" id="imgInp1" accept="image/*" onchange="previewImage(event, 'prev1')">
-                        <img id="prev1" class="preview-img">
-                    </div>
-                    <div class="file-upload" onclick="document.getElementById('imgInp2').click()">
-                        <span>🖼️ 2번 사진<br>(물품/가구 세부 분석용)</span>
-                        <input type="file" id="imgInp2" accept="image/*" onchange="previewImage(event, 'prev2')">
-                        <img id="prev2" class="preview-img">
-                    </div>
-                    <div class="file-upload" onclick="document.getElementById('imgInp3').click()">
-                        <span>🖼️ 3번 사진<br>(구석 사각지대용)</span>
-                        <input type="file" id="imgInp3" accept="image/*" onchange="previewImage(event, 'prev3')">
-                        <img id="prev3" class="preview-img">
-                    </div>
-                </div>
-
-                <button type="button" onclick="generateResult()">AI 딥러닝 독창적 공간 분석 시작!</button>
-            </form
+            font-size: 1.1rem;
+            font-family: 'Gaegu', sans
